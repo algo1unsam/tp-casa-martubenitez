@@ -52,62 +52,23 @@ object cuentaConGastos {
 }
 
 object cuentaCombinada {
-    var primaria = 0
-    var secundaria = 500
-    const costo = 20
 
-    method depositar(monto){
-        primaria = primaria + monto - costo
+    method depositar(monto) {
+      cuentaCorriente.depositar(monto)
     }
 
-    method extraer(monto){
-        if (primaria >= monto){
-            primaria -= monto
-        }else {
-            secundaria -= monto
-        }
+    method extraer(monto) {
+      if (cuentaCorriente.ver_saldo() >= monto) {
+        cuentaCorriente.extraer(monto)
+      } else cuentaConGastos.extraer(monto)
     }
 
-    method saldo(cuenta){
-        return primaria + secundaria
-    }
+    method ver_saldo() {
+        return cuentaCorriente.ver_saldo() + cuentaConGastos.ver_saldo()
+    } 
     
 }
 
-object cuentaConGastos {
-    var saldo = 0
 
-    method depositar(_monto, costo){
-        saldo = saldo + _monto - costo
-    }
 
-    method extraer(_monto){
-        saldo -= _monto
-    }
-
-    method ver_saldo() = saldo
-}
-
-object cuentaCombinada {
-    var primaria = 0
-    var secundaria = 500
-    const costo = 20
-
-    method depositar(monto, costo){
-        cuentaCombinada.depositar(monto)
-    }
-
-    method extraer(monto){
-        if (primaria >= monto){
-            primaria -= monto
-        }else {
-            secundaria -= monto
-        }
-    }
-
-    method saldo(cuenta){
-        return primaria + secundaria
-    }
-    
-}
 
